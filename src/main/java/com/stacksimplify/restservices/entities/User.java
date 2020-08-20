@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity // if no name provided, entity name is same as classname
 @Table(name="user") // creates table with same name as name specified, else same as classname, we can mention schema too
@@ -14,9 +16,11 @@ public class User {
 	@GeneratedValue // for auto generating ids, can be diff ways, here we are using default (auto increment)
 	private long id;
 	
+	@NotEmpty(message = "Username is mandatory field, please provide user name")
 	@Column(name = "USER_NAME", length = 50, nullable = false, unique=true)
 	private String username;
 	
+	@Size(min = 2, message = "Firstname should have minimum 2characters")
 	@Column(name = "FIRST_NAME" , length = 50, nullable = false)
 	private String firstname;
 	
