@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,20 +30,21 @@ import com.stacksimplify.restservices.services.UserService;
 
 @RestController
 @Validated
+@RequestMapping(value="/users")
 public class UserController {
 
 	// auto wire user service
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/users")
+	@GetMapping
 	public List<User> getAllUsers() {
 
 		return userService.getAllUsers();
 	}
 
 	// create user
-	@PostMapping("/users")
+	@PostMapping
 	public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder) {
 		try {
 			userService.createUser(user);
@@ -55,7 +57,7 @@ public class UserController {
 	}
 
 	// get user by id
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
 	public Optional<User> getUserById(@PathVariable("id") @Min(1) long id) {
 		try {
 			return userService.getUserById(id);
@@ -66,7 +68,7 @@ public class UserController {
 	}
 
 	// update user by id
-	@PutMapping("/users/{id}")
+	@PutMapping("/{id}")
 	public User upgateUserById(@PathVariable("id") long id, @RequestBody User user) {
 
 		try {
@@ -77,13 +79,13 @@ public class UserController {
 	}
 
 	// delete user by id
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteUserById(@PathVariable("id") long id) throws UserNotFoundException {
 		userService.deleteUserById(id);
 	}
 
 	// get user by username
-	@GetMapping("/users/byusername/{username}")
+	@GetMapping("/byusername/{username}")
 	public User getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
 		User user = userService.getUserByUsername(username);
 		if(user == null)
