@@ -1,4 +1,4 @@
-package com.stacksimplify.restservices.exceptions;
+ package com.stacksimplify.restservices.exceptions;
 
 import java.util.Date;
 
