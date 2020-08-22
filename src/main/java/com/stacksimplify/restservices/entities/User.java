@@ -13,9 +13,13 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity // if no name provided, entity name is same as classname
 @Table(name = "user") // creates table with same name as name specified, else same as classname, we
-						// can mention schema too
+				// can mention schema too
+@JsonIgnoreProperties({"firstname","lastname"})
 public class User extends ResourceSupport {
 
 	@Id // used for primary key in JPA
@@ -41,6 +45,7 @@ public class User extends ResourceSupport {
 	private String role;
 
 	@Column(name = "SSN", length = 50, nullable = false, unique = true)
+	@JsonIgnore
 	private String ssn;
 
 	@OneToMany(mappedBy = "user")
